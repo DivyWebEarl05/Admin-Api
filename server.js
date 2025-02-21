@@ -4,6 +4,7 @@ import connectDB from "./src/config/db.js";
 import dotenv from "dotenv";
 
 import adminRoute from "./src/routes/adminRoute.js"
+import aboutusRoute from "./src/routes/aboutusRoute.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json());
 
 app.use('/api', adminRoute);
+app.use('/api', aboutusRoute);
 
 connectDB()
     .then(() => {
