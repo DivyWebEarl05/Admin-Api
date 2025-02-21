@@ -4,7 +4,7 @@ const aboutUsSchema = new mongoose.Schema({
     email: { type: [String], required: true }, 
     password: { type: String, required: true }, 
 
-    totalNumber: { type: [Number], required: true }, 
+    totalDownload: { type: [Number], required: true }, 
     totalEmployees: { type: [Number], required: true }, 
     totalVendor: { type: [Number], required: true }, 
     totalUsers: { type: [Number], required: true }, 
