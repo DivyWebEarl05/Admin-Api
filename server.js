@@ -23,8 +23,6 @@ app.use('/api', adminRoute);
 app.use('/api', aboutusRoute);
 app.use('/api', packageRoute);
 app.use('/api/blog', blogRoute);
-
-
 // IN case Fail Config db.js
 connectDB()
     .then(() => {

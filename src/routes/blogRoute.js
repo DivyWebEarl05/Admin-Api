@@ -9,8 +9,7 @@ import upload from "../middleware/multer.js";
 
 const router = express.Router();
 
-router.post(
-    "/create",
+router.post("/create",
     upload.fields([
       { name: "photo1", maxCount: 1 },
       { name: "photo2", maxCount: 1 },
@@ -23,8 +22,7 @@ router.post(
 router.get("/getall", getAllBlogs);
 router.get("/getblogById/:id", getBlogById);
   
-router.put(
-    "/update/:id",
+router.put("/update/:id",
     upload.fields([
       { name: "photo1", maxCount: 1 },
       { name: "photo2", maxCount: 1 },
