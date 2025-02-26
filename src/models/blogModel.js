@@ -31,15 +31,12 @@ const blogSchema = new mongoose.Schema({
         required: true
     }], 
 
-    aboutBlog: {
-        point: [{ 
-            type: String 
-        }], 
-
-        image: { 
-            type: String 
-        }, // Single image 
-    },
+    aboutBlog: [
+        {
+          points: [{ type: String }],  // Array of points (strings)
+          image: { type: String },     // Single image for each aboutBlog object
+        }
+      ],
 
     blog_description: { 
         type: String, 
