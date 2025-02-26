@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     } else if (file.fieldname === "photoArray") {
       uploadFolder += "photoArray/";
     } else if (file.fieldname === "aboutBlogImage") {
-      uploadFolder += "aboutBlog/";
+      uploadFolder += "aboutblog/";
     }
 
     cb(null, uploadFolder);
