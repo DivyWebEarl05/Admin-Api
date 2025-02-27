@@ -1,46 +1,88 @@
 import Blog from "../models/blogModel.js"
 import mongoose from "mongoose";
 
+
+// const createBlog = async (req, res) => {
+//   try {
+//     const { blog_title, blog_description, photo1_description, photo2_description, selected_package, aboutBlogPoints } = req.body;
+
+//     // Handle image uploads
+//     const photo1 = req.files["photo1"] ? req.files["photo1"][0].path : null;
+//     const photo2 = req.files["photo2"] ? req.files["photo2"][0].path : null;
+//     const photoArray = req.files["photoArray"] ? req.files["photoArray"].map(file => file.path) : [];
+//     const aboutBlogImage = req.files["aboutBlogImage"] ? req.files["aboutBlogImage"][0].path : null;
+
+//     // If there are points, create the aboutBlog structure
+//     const aboutBlog = aboutBlogPoints ? [{
+//       points: aboutBlogPoints,  // Points array received in the request
+//       image: aboutBlogImage,    // Same image for all points in the aboutBlog object
+//     }] : [];
+
+//     // Create the new blog object
+//     const newBlog = new Blog({
+//       blog_title,
+//       blog_description,
+//       photo1,
+//       photo1_description,
+//       photo2,
+//       photo2_description,
+//       photoArray,
+//       aboutBlog,  // This will contain a single object with points and the image
+//       selected_package: selected_package ? new mongoose.Types.ObjectId(selected_package) : null,
+//     });
+
+//     // Save the blog
+//     await newBlog.save();
+
+//     // Return success response
+//     res.status(201).json({ message: "Blog created successfully!", blog: newBlog });
+//   } catch (error) {
+//     // Return error response
+//     res.status(500).json({ message: "Error creating blog", error: error.message });
+//   }
+// };
 const createBlog = async (req, res) => {
-    try {
-      const { blog_title, blog_description, photo1_description, photo2_description, selected_package, aboutBlogPoints } = req.body;
-  
-      // Handle image uploads
-      const photo1 = req.files["photo1"] ? req.files["photo1"][0].path : null;
-      const photo2 = req.files["photo2"] ? req.files["photo2"][0].path : null;
-      const photoArray = req.files["photoArray"] ? req.files["photoArray"].map(file => file.path) : [];
-      const aboutBlogImage = req.files["aboutBlogImage"] ? req.files["aboutBlogImage"][0].path : null;
-  
-      // If there are points, create the aboutBlog structure
-      const aboutBlog = aboutBlogPoints ? [{
-        points: aboutBlogPoints,  // Points array received in the request
-        image: aboutBlogImage,    // Same image for all points in the aboutBlog object
-      }] : [];
-  
-      // Create the new blog object
-      const newBlog = new Blog({
-        blog_title,
-        blog_description,
-        photo1,
-        photo1_description,
-        photo2,
-        photo2_description,
-        photoArray,
-        aboutBlog,  // This will contain a single object with points and the image
-        selected_package: selected_package ? new mongoose.Types.ObjectId(selected_package) : null,
-      });
-  
-      // Save the blog
-      await newBlog.save();
-  
-      // Return success response
-      res.status(201).json({ message: "Blog created successfully!", blog: newBlog });
-    } catch (error) {
-      // Return error response
-      res.status(500).json({ message: "Error creating blog", error: error.message });
-    }
-  };
-  
+  try {
+    const baseUrl = "https://admin-api-1xs0.onrender.com/";
+
+    const { blog_title, blog_description, photo1_description, photo2_description, selected_package, aboutBlogPoints } = req.body;
+
+    // Handle image uploads
+    const photo1 = req.files["photo1"] ? baseUrl + req.files["photo1"][0].path.replace(/\\/g, "/") : null;
+    const photo2 = req.files["photo2"] ? baseUrl + req.files["photo2"][0].path.replace(/\\/g, "/") : null;
+    const photoArray = req.files["photoArray"] ? req.files["photoArray"].map(file => baseUrl + file.path.replace(/\\/g, "/")) : [];
+    const aboutBlogImage = req.files["aboutBlogImage"] ? baseUrl + req.files["aboutBlogImage"][0].path.replace(/\\/g, "/") : null;
+
+    // If there are points, create the aboutBlog structure
+    const aboutBlog = aboutBlogPoints ? [{
+      points: aboutBlogPoints,  // Points array received in the request
+      image: aboutBlogImage,    // Image with full accessible URL
+    }] : [];
+
+    // Create the new blog object
+    const newBlog = new Blog({
+      blog_title,
+      blog_description,
+      photo1,
+      photo1_description,
+      photo2,
+      photo2_description,
+      photoArray,
+      aboutBlog,  // This will contain a single object with points and the image
+      selected_package: selected_package ? new mongoose.Types.ObjectId(selected_package) : null,
+    });
+
+    // Save the blog
+    await newBlog.save();
+
+    // Return success response
+    res.status(201).json({ message: "Blog created successfully!", blog: newBlog });
+  } catch (error) {
+    // Return error response
+    res.status(500).json({ message: "Error creating blog", error: error.message });
+  }
+};
+
 const getAllBlogs = async (req, res) => {
     try {
       const blogs = await Blog.aggregate([

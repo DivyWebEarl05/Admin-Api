@@ -14,6 +14,8 @@ const storage = multer.diskStorage({
       uploadFolder += "photoArray/";
     } else if (file.fieldname === "aboutBlogImage") {
       uploadFolder += "aboutblog/";
+    } else if (file.fieldname === "testimonial") {
+      uploadFolder += "testimonial/";
     }
 
     cb(null, uploadFolder);
